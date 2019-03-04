@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Pics</title>
-  </head>
-  <body>
-    <h1>Check out these pics:</h1>
-    <ul>
-      {% for pic in pics %}
-        <a href="{% url 'picture_details' id=pic.pk %}">
-          <li>
-            <img src={{pic.url}} alt={{pic.title}}>
-            <!-- all is all(), count is count() -->
-            <p>Comments: {{ pic.comments.count }}</p>
-          </li>
-        </a>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<h1>Check out these pics:</h1>
+<ul>
+  {% for pic in pics %}
+    <a href="{% url 'picture_details' id=pic.pk %}">
+      <li>
+        <img src={{pic.url}} alt={{pic.title}}>
+        <!-- all is all(), count is count() -->
+        <p>Comments: {{ pic.comments.count }}</p>
+      </li>
+    </a>
+  {% endfor %}
+</ul>
+{% endblock %}

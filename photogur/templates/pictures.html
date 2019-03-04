@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Check out these pics:</h2>
-<ul>
+<ul class="picture-gallery">
   {% for pic in pics %}
-    <a href="{% url 'picture_details' id=pic.pk %}">
-      <li>
-        <img src={{pic.url}} alt={{pic.title}}>
-        <!-- all is all(), count is count() -->
-        <p>Comments: {{ pic.comments.count }}</p>
-      </li>
-    </a>
+    <div class="frame">
+      <a class="picture-link" href="{% url 'picture_details' id=pic.pk %}">
+        <li class="picture-item">
+          <img class="picture" src={{pic.url}} alt={{pic.title}}>
+          <!-- all is all(), count is count() -->
+          <p class="picture-description">{{pic.title}} by {{pic.artist}}</p>
+        </li>
+      </a>
+    </div>
   {% endfor %}
 </ul>
 {% endblock %}

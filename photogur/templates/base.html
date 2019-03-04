@@ -5,14 +5,20 @@
     <meta charset="utf-8">
     <title>Photogur</title>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:200" rel="stylesheet">
   </head>
   <body>
-    <header>
+    <header class="site-header">
       <h1>Photogur</h1>
     </header>
+    <main class="site-content">
     <!-- page-specific content goes inside the block -->
     {% block content %}
     {% endblock %}
-    <footer>Copyright Anton Moiseev</footer>
+    </main>
+    <footer class="site-footer">
+      Copyright 2019 Anton Moiseev
+    </footer>
   </body>
 </html>

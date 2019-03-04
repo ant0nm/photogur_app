@@ -4,10 +4,12 @@
 <h3>By {{picture.artist}}</h3>
 
 <img src={{picture.url}} alt={{picture.title}} />
-<h3>Comments:</h3>
-<ul>
-  {% for comment in picture.comments.all %}
-  <li>{{comment.message}}</li>
-  {% endfor %}
-</ul>
+<div class="comments">
+  <h3>Comments:</h3>
+  <ul>
+    {% for comment in picture.comments.all %}
+    <li>{{comment.message}}</li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}

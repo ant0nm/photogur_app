@@ -11,5 +11,16 @@
     <li>{{comment.message}}</li>
     {% endfor %}
   </ul>
+  <form action="{% url 'create_comment' %}" method="post">
+    {% csrf_token %}
+    
+    <fieldset>
+      <legend>Submit a new comment</legend>
+      <input type="hidden" name="picture" value="{{picture.pk}}">
+      <input type="text" name="comment-name" placeholder="Name">
+      <input type="text" name="comment-message" placeholder="Comment">
+      <input type="submit" name="comment-submit" value="Submit Comment">
+    </fieldset>
+  </form>
 </div>
 {% endblock %}

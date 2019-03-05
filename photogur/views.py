@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from photogur.models import Picture, Comment
 
@@ -21,3 +21,12 @@ def picture_search(request):
     context = {'pictures': search_results, 'query': query}
     html_string = render(request, 'search.html', context)
     return HttpResponse(html_string)
+
+def create_comment(request):
+    post_dict = request.POST
+    picture = Picture.objects.get(pk=post_dict['picture'])
+    name = post_dict['comment-name']
+    message = post_dict['comment-message']
+    new_comment = Comment.objects.create(name=name, message=message, picture=picture)
+    path = '/pictures/' + str(picture.pk)
+    return HttpResponseRedirect(path)

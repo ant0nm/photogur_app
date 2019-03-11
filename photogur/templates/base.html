@@ -16,9 +16,16 @@
           <span>Search:</span>
           <input type="search" id="picture-search" name="query" value={{query}}>
         </label>
-
         <input type="submit" value="Search">
       </form>
+      <ul>
+        {% if request.user.is_authenticated %}
+          <li>Logged in as {{ request.user.username }}</li>
+          <li><a href="{% url 'logout' %}">Log out</a></li>
+        {% else %}
+          <li><a href="{% url 'login' %}">Log in</a></li>
+        {% endif %}
+      </ul>
     </header>
     <main class="site-content">
     <!-- page-specific content goes inside the block -->

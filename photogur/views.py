@@ -11,8 +11,6 @@ def root(request):
 
 def pictures_page(request):
     context = {'pics': Picture.objects.all()}
-    if request.user.is_authenticated:
-        context['pics'] = request.user.pictures.all()
     html_string = render(request, 'pictures.html', context)
     return HttpResponse(html_string)
 
@@ -35,6 +33,12 @@ def add_picture(request):
         form = PictureForm()
     html_response = render(request, 'new_picture.html', {'form': form})
     return HttpResponse(html_response)
+
+@login_required
+def user_pictures(request):
+    context = {'pics': request.user.pictures.all()}
+    html_string = render(request, 'pictures.html', context)
+    return HttpResponse(html_string)
 
 def picture_search(request):
     # request.GET is a dictionary where keys are form filed names (that we assigned) and values are data entered by the user

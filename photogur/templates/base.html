@@ -23,13 +23,13 @@
       <ul>
         {% if request.user.is_authenticated %}
           <li>Logged in as {{ request.user.username }}</li>
+          <li><a href="{% url 'user_pictures' %}">My posts</a></li>
           <li><a href="{% url 'add_picture' %}">Add a pic</a></li>
           <li><a href="{% url 'logout' %}">Log out</a></li>
         {% else %}
           <li><a href="{% url 'signup' %}">Sign up!</a></li>
           <li><a href="{% url 'login' %}">Log in</a></li>
         {% endif %}
-        <li><a href="{% url 'root' %}">Home</a></li>
       </ul>
     </header>
     <main class="site-content">

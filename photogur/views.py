@@ -2,9 +2,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from photogur.models import Picture, Comment
 from photogur.forms import LoginForm
+from django.contrib.auth import authenticate, login
 
 def root(request):
-    return HttpResponseRedirect('pictures/')
+    return HttpResponseRedirect('/pictures/')
 
 def pictures_page(request):
     context = {'pics': Picture.objects.all()}
@@ -35,7 +36,20 @@ def create_comment(request):
     return HttpResponseRedirect(path)
 
 def login_view(request):
-    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            pw = form.cleaned_data['password']
+            user = authenticate(username=username, password=pw)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('/pictures/')
+            else:
+                form.add_error('username', 'Login failed')
+    else:
+        form = LoginForm()
+
     context = {'form': form}
     http_response = render(request, 'login.html', context)
     return HttpResponse(http_response)

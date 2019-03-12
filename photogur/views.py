@@ -34,7 +34,6 @@ def add_picture(request):
     html_response = render(request, 'new_picture.html', {'form': form})
     return HttpResponse(html_response)
 
-@login_required
 def user_pictures(request):
     context = {'pics': request.user.pictures.all()}
     html_string = render(request, 'pictures.html', context)

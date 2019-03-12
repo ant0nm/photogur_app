@@ -3,7 +3,12 @@
 <h2>{{picture.title}}</h2>
 <h3>By {{picture.artist}}</h3>
 
-<img src={{picture.url}} alt={{picture.title}} />
+<img class="shown-image" src={{picture.url}} alt={{picture.title}} />
+{% if picture.user == request.user %}
+  <p>
+    <a class="edit-photo" href="{% url 'edit_picture' id=picture.id %}">Edit Picture</a>
+  </p>
+{% endif %}
 <div class="comments">
   <h3>Comments:</h3>
   <ul>
@@ -13,7 +18,7 @@
   </ul>
   <form action="{% url 'create_comment' %}" method="post">
     {% csrf_token %}
-    
+
     <fieldset>
       <legend>Submit a new comment</legend>
       <input type="hidden" name="picture" value="{{picture.pk}}">

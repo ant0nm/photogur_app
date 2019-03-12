@@ -1,10 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from photogur.models import Picture, Comment
 from photogur.forms import LoginForm, PictureForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 def root(request):
     return HttpResponseRedirect('/pictures/')
@@ -34,6 +35,24 @@ def add_picture(request):
     html_response = render(request, 'new_picture.html', {'form': form})
     return HttpResponse(html_response)
 
+@login_required
+def edit_picture(request, id):
+    picture = get_object_or_404(Picture, pk=id, user=request.user.pk)
+    if request.method == "POST":
+        form = PictureForm(request.POST, instance=picture)
+        if form.is_valid():
+            updated_picture = form.save()
+            return HttpResponseRedirect(reverse('picture_details', args=[picture.id]))
+    else:
+        form = PictureForm(instance=picture)
+    context = {'form': form, 'picture': picture}
+    html_response = render(request, 'edit_picture.html', context)
+    return HttpResponse(html_response)
+
+    context = {'picture': picture}
+    html_response = render(request, "edit_picture.html", context)
+    return HttpResponse(html_response)
+
 def user_pictures(request):
     context = {'pics': request.user.pictures.all()}
     html_string = render(request, 'pictures.html', context)
@@ -57,6 +76,8 @@ def create_comment(request):
     return HttpResponseRedirect(path)
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -80,6 +101,8 @@ def logout_view(request):
     return HttpResponseRedirect('/')
 
 def signup(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():

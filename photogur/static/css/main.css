@@ -28,6 +28,29 @@ body {
   margin-bottom: 10px;
 }
 
+.site-nav > ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.site-nav li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.site-nav li:last-child {
+  margin-right: 0;
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: #0074D9;
+}
+
+.site-nav a:hover {
+  color: silver;
+}
+
 .picture-gallery {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -67,6 +90,19 @@ body {
 
 .site-content {
   text-align: center;
+}
+
+.shown-image {
+  width: 100%;
+}
+
+.edit-photo {
+  text-decoration: none;
+  color: #0074D9;
+}
+
+.edit-photo:hover {
+  color: #333;
 }
 
 .comments > ul {
